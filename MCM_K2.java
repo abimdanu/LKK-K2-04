@@ -1,6 +1,24 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/*
+ * MATRIX-CHAIN MULTIPLICATION :
+ * 
+ * Ialah bagaimana caranya mengecilkan jumlah operasi yang terjadi
+ * pada perkalian matriks, dengan memanfaatkan sifat asosiatif
+ * matriks, yakni peletakan tanda kurung/prioritas pengerjaan.
+ * 
+ */
+
+/*
+ * NOTES !!! :
+ * 
+ * Program mungkin tidak meng-output-kan tampilan yang benar bila
+ * nilai-nilai input terlalu besar, dikarenakan formatting yang
+ * diterapkan hanya diperuntukkan nilai-nilai input yang tidak
+ * terlalu besar.
+ */
+
 public class MCM_K2 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -9,12 +27,43 @@ public class MCM_K2 {
         System.out.println("--  INPUT DATA  --\n");
         System.out.print("Jumlah matriks    : ");
         int n = sc.nextInt();
+        if (n < 0) {
+            System.out.println("\n--  ERROR : UKURAN TIDAK VALID ! --");
+            return;
+        }
         int[] p = new int[n+1];
         System.out.println();
 
-        for (int i = 0; i < p.length; i++) {
-            System.out.printf("Dimensi ke-%d      : ", i+1);
-            p[i] = sc.nextInt();
+        for (int i = 0; i < p.length-1; i++) {
+            System.out.println();
+
+            // input data
+            System.out.printf("Baris matriks %d : ", i+1);
+            int rowSize = sc.nextInt();
+            if (rowSize < 0) {
+                System.out.println("\n--  ERROR : UKURAN TIDAK VALID ! --");
+                return;
+            }
+
+            System.out.printf("Kolom matriks %d : ", i+1);
+            int columnSize = sc.nextInt();
+            if (columnSize < 0) {
+                System.out.println("\n--  ERROR : UKURAN TIDAK VALID ! --");
+                return;
+            }
+            
+            // memasukkan data ke array p
+            if (i == 0) {
+                p[i] = rowSize;
+                p[i+1] = columnSize;
+            } else {
+                if (rowSize != p[i]) {
+                    System.out.println("--  ERROR : UKURAN TIDAK VALID ! --");
+                    return;
+                } else {
+                    p[i+1] = columnSize;
+                }
+            }
         }
 
         System.out.println("\n--  DATA TELAH DIMASUKKAN --\n");
@@ -27,11 +76,15 @@ public class MCM_K2 {
         int upper = sc.nextInt();
         ArrayList<int[][]> arr = MCM(p);
 
-        /*
-         * TODO: SELESAIKAN & PANGGIL METHOD PRINT
-         */
+        System.out.println("\n\n====  HASIL PERHITUNGAN  ====\n");
 
+        System.out.printf("Urutan perkalian dari matriks ke-%d hingga ke-%d yang optimum akan melakukan perkalian sebanyak %d kali, dengan urutan perkalian berikut : \n",
+                        lower, upper, arr.get(0)[lower][upper]);
+        PrintOptimalParentheses(arr.get(1), lower, upper);
+        System.out.println("\n\n");
         PrintAttributeMatrices(arr);
+
+        sc.close();
     }
 
     static ArrayList<int[][]> MCM(int[] p) {
@@ -76,8 +129,6 @@ public class MCM_K2 {
         return result;
     }
 
-
-
     static void PrintAttributeMatrices(ArrayList<int[][]> arr) {
         System.out.println("(COST/M MATRIX)  : ");
         System.out.println("      j");
@@ -110,5 +161,16 @@ public class MCM_K2 {
             System.out.println();
         }
         System.out.println();
+    }
+
+    static void PrintOptimalParentheses(int[][] s, int lowerMatrix, int upperMatrix) {
+        if (lowerMatrix == upperMatrix) {
+            System.out.printf("A%d", lowerMatrix);
+        } else {
+            System.out.print("(");
+            PrintOptimalParentheses(s, lowerMatrix, s[lowerMatrix][upperMatrix]);
+            PrintOptimalParentheses(s, s[lowerMatrix][upperMatrix]+1, upperMatrix);
+            System.out.print(")");
+        }
     }
 }

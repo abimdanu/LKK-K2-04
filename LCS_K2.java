@@ -68,4 +68,38 @@ public class LCS_K2 {
         result.add(direction);
         return result;
     }
+
+    static void Print_Matrices(int[][] direction_arr, int[][] c_arr) {
+        System.out.println("\n===============================");
+        System.out.println("   Tabel C : ");
+        for (int i = 0; i < c_arr.length; i++) {
+            for (int j = 0; j < c_arr[i].length; j++) {
+                System.out.printf("%4d", c_arr[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("===============================\n");
+        
+        System.out.println("\n===============================");
+        System.out.println("   Tabel B (arah) : ");
+        for (int i = 0; i < direction_arr.length; i++) {
+            for (int j = 0; j < direction_arr[i].length; j++) {
+                if (direction_arr[i][j] == 5) {
+                    System.out.printf("%4s", "<<");
+                } else if (direction_arr[i][j] == 6) {
+                    System.out.printf("%4s", "\\\\");
+                } else if (direction_arr[i][j] == 7) {
+                    System.out.printf("%4s", "^^");
+                } else {
+                    if (i == 0 && j == 0)
+                        System.out.print("    ");
+                    else 
+                        System.out.printf("%4d", direction_arr[i][j]);
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("===============================");
+    }
+
 }

@@ -72,7 +72,7 @@ public class LCS_K2 {
          */
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
-                if (X[i].equals(Y[j])) {
+                if (X[i-1].equals(Y[j-1])) {
                     c[i][j] = c[i-1][j-1] + 1;
                     direction[i][j] = 6;
                 } else if (c[i-1][j] >= c[i][j-1]) {

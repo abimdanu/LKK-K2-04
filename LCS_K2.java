@@ -23,11 +23,13 @@ public class LCS_K2 {
             Y[i] = Y_input.substring(i, i+1);
         }
 
-        LCS_length(X, Y);
-        /*
-         * TODO: METHOD LCS_length MASIH ERROR !!
-         * (array out o/ bounds, akses idx 7 padahal size 7)
-         */
+        ArrayList<int[][]> result_arr = LCS_length(X, Y);
+        System.out.print("\nLCS dari X dan Y adalah : ");
+        Print_LCS(result_arr.get(1), X, X.length, Y.length);
+        System.out.println("\n\nTabel : ");
+        Print_Matrices(result_arr.get(1), result_arr.get(0));
+
+        sc.close();
     }
 
     static ArrayList<int[][]> LCS_length(String[] X, String[] Y) {
@@ -45,7 +47,29 @@ public class LCS_K2 {
             c[0][j] = 0;
         }
 
-        // ALGORITMA LCS
+        /*
+         * Algoritma LCS:
+         * 
+         * Membandingkan huruf per huruf pada string X dan Y dengan 2 looping.
+         * 
+         * Jika kedua huruf yang dibandingkan SAMA, maka :
+         *  - Tabel nilai pada posisi [i,j] diganti dengan nilai di diagonal atasnya,
+         *    lalu ditambah 1 ( [i-1, j-1] + 1 )
+         *  - Tabel arah pada posisi [i,j] mengarah serong ke atas kiri, dilambangkan
+         *    dengan angka 6.
+         * 
+         * Jika kedua huruf yang dibandingkan BERBEDA, maka :
+         *  Tabel nilai pada posisi [i,j] diganti dengan nilai maksimum antara
+         *  nilai pada satu elemen di atasnya ( [i, j-1] ) dan nilai pada satu elemen
+         *  di kirinya ( [i-1, j] ).
+         * 
+         *  Jika yang lebih besar adalah elemen atas, maka :
+         *    - Tabel arah pada posisi [i,j] mengarah ke atas, dilambangkan dengan
+         *      angka 7.
+         *  Jika yang lebih besar adalah elemen kiri, maka :
+         *    - Tabel arah pada posisi [i,j] mengarah ke kiri, dilambangkan dengan
+         *      angka 5.
+         */
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
                 if (X[i].equals(Y[j])) {
@@ -100,6 +124,21 @@ public class LCS_K2 {
             System.out.println();
         }
         System.out.println("===============================");
+    }
+
+    static void Print_LCS(int[][] direction_arr, String[] X_arr, int i, int j) {
+        if (i == 0 || j == 0) {
+            return;
+        }
+
+        if (direction_arr[i][j] == 6) {
+            Print_LCS(direction_arr, X_arr, i-1, j-1);
+            System.out.print(X_arr[i-1]);
+        } else if (direction_arr[i][j] == 7) {
+            Print_LCS(direction_arr, X_arr, i-1, j);
+        } else {
+            Print_LCS(direction_arr, X_arr, i, j-1);
+        }
     }
 
 }

@@ -35,8 +35,8 @@ public class LCS_K2 {
         int n = Y.length;
 
         // inisialisasi array arah/panah dan array nilai
-        int[][] direction = new int[m][n];
-        int[][] c = new int[m][n];
+        int[][] direction = new int[m+1][n+1];
+        int[][] c = new int[m+1][n+1];
 
         for (int i = 1; i <= m; i++) {
             c[i][0] = 0;

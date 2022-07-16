@@ -30,6 +30,8 @@ public class MCM_K2 {
         /*
          * TODO: SELESAIKAN & PANGGIL METHOD PRINT
          */
+
+        PrintAttributeMatrices(arr);
     }
 
     static ArrayList<int[][]> MCM(int[] p) {
@@ -72,5 +74,41 @@ public class MCM_K2 {
         result.add(m);
         result.add(s);
         return result;
+    }
+
+
+
+    static void PrintAttributeMatrices(ArrayList<int[][]> arr) {
+        System.out.println("(COST/M MATRIX)  : ");
+        System.out.println("      j");
+        for (int i = 0; i < arr.get(0).length; i++) {
+            for (int j = 0; j < arr.get(0).length; j++) {
+                if (i == 0 && j == 0) {
+                    System.out.printf("%-12s", "i");
+                    continue;
+                } else if (i != 0 && j == 0) {
+                    System.out.print("   ");
+                }
+                System.out.printf("[%6d] ", arr.get(0)[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+
+        System.out.println("(S/k MATRIX)  : ");
+        System.out.println("     j");
+        for (int i = 0; i < arr.get(1).length; i++) {
+            for (int j = 0; j < arr.get(1).length; j++) {
+                if (i == 0 && j == 0) {
+                    System.out.printf("%-9s", "i");
+                    continue;
+                } else if (i != 0 && j == 0) {
+                    System.out.print("   ");
+                }
+                System.out.printf("[%2d ] ", arr.get(1)[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 }
